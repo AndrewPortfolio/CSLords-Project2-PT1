@@ -22,15 +22,9 @@ algorithm_choice = int(input("Enter your choice (1-3): "))
 if algorithm_choice == 1:
     print("You have selected Forward Selection.")
     final_feats = forward_selection(num_features)
-    accuracy = rando_eval()
-    print("Accuracy: ", accuracy)
 elif algorithm_choice == 2:
     print("You have selected Backward Elimination.")
     final_feats = backward_elim(num_features)
-    accuracy = rando_eval()
-    print("Accuracy: ", accuracy)
 else:
     print("You have selected CS Lords Special.")
     final_feats = special(num_features) 
-    accuracy = rando_eval()
-    print("Accuracy: ", accuracy)   
