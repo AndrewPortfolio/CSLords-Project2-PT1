@@ -14,7 +14,7 @@ def backward_elim(num_features):
     base_score = rando_eval()
     best_score = base_score
 
-    print(f"\nUsing {current_features} and \"random\" eval accuracy is {round(base_score*100,2)}%")
+    print(f"\nUsing feature(s) {current_features} and \"random\" eval accuracy is {round(base_score*100,2)}%")
 
     # track removed features
     removed_features = []
@@ -29,7 +29,7 @@ def backward_elim(num_features):
             subset = [x for x in current_features if x != f]
             score_after_removal = rando_eval()  # evaluate this subset
 
-            print(f"\tSubset {subset} with accuracy of {round(score_after_removal*100,2)}%")
+            print(f"\tUsing feature(s) {subset} with accuracy of {round(score_after_removal*100,2)}%")
 
             if score_after_removal > best_score:
                 best_score = score_after_removal
