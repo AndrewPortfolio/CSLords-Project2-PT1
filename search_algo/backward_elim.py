@@ -14,12 +14,12 @@ def backward_elim(num_features):
     base_score = rando_eval()
     best_score = base_score
 
-    print(f"Using {current_features} and \"random\" eval accuracy is {round(base_score*100,2)}%")
+    print(f"\nUsing {current_features} and \"random\" eval accuracy is {round(base_score*100,2)}%")
 
     # track removed features
     removed_features = []
 
-    print("Beginning Search")
+    print("\nBeginning Search\n")
     while len(current_features) > 1:
 
         feature_to_remove = None
@@ -40,10 +40,12 @@ def backward_elim(num_features):
             removed_features.append(feature_to_remove)
             current_features.remove(feature_to_remove)
             base_score = best_score  # update the best score
-            print(f"\nRemoved feature {feature_to_remove}, new accuracy: {round(base_score * 100,2)}\n")
+            print(f"\nRemoved feature {feature_to_remove}; new set: {current_features} with accuracy of {round(best_score * 100,2)}%\n")
         else:
-            print("\nNo more features to remove, finishing Backward Elimination\n")
+            print("\nNo more improvements can be made by removal, terminating the search...\n")
             break
+
+    print(f"\nSuccessfully executed Backward Elimination\n\tresult: {current_features} with accuracy of {round(best_score * 100,2)}%\n")
 
     return {
         "current_features": current_features,
