@@ -11,24 +11,32 @@ from utils.eval_func import rando_eval
 def backward_elim(num_features):
     # get all features and eval of it
     current_features = list(range(num_features))
-    best_score = rando_eval(current_features)
+    best_score = rando_eval()
 
-    # flag of improvement
-    improved = True
+    # keep track of removed features
+    removed_features = list()
 
-    while improved and len(current_features) > 1:
+    while len(current_features) > 1:
         # every iteration, see if we improved in performance
         feature_to_remove = None
         best_temp_score = best_score
 
         # try to remove each feature at once
         for f in current_features:
-            # try removing feature f
-            # then, evaluate model
-            # place holder
-            pass
+            candidate = [x for x in current_features if x != f]
+            score = rando_eval() # for now, it is random
 
-        break
+            if score > best_score_after_removal:
+                best_score_after_removal = score
+                feature_to_remove = f
+
+        if feature_to_remove is not None:
+            removed_features.append(feature_to_remove)
+            current_features.remove(feature_to_remove)
+        else:
+            # if no feature is identified, break
+            print("No more features to remove, finishing the Backward Elimination")
+            break
 
 
 
@@ -36,7 +44,5 @@ def backward_elim(num_features):
     return {
         "current_features": current_features,
         "best_score": best_score,
-        "improved": improved,
-        "feature_to_remove": feature_to_remove,
-        "best_temp_score": best_temp_score
+        "removed_features": removed_features,
     }
