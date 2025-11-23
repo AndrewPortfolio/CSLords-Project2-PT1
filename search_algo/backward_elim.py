@@ -9,40 +9,44 @@ from utils.eval_func import rando_eval
 #   4. Stopping when no further removals improve performance.
 
 def backward_elim(num_features):
-    # get all features and eval of it
-    current_features = list(range(num_features))
-    best_score = rando_eval()
+    # Start with all features
+    current_features = list(range(1, num_features+1))
+    base_score = rando_eval()
+    best_score = base_score
 
-    # keep track of removed features
-    removed_features = list()
+    print(f"Using {current_features} and \"random\" eval accuracy is {round(base_score*100,2)}%")
 
+    # track removed features
+    removed_features = []
+
+    print("Beginning Search")
     while len(current_features) > 1:
-        # every iteration, see if we improved in performance
+
         feature_to_remove = None
-        best_temp_score = best_score
 
-        # try to remove each feature at once
+        # try removing each feature
         for f in current_features:
-            candidate = [x for x in current_features if x != f]
-            score = rando_eval() # for now, it is random
+            subset = [x for x in current_features if x != f]
+            score_after_removal = rando_eval()  # evaluate this subset
 
-            if score > best_score_after_removal:
-                best_score_after_removal = score
+            print(f"\tSubset {subset} with accuracy of {round(score_after_removal*100,2)}%")
+
+            if score_after_removal > best_score:
+                best_score = score_after_removal
                 feature_to_remove = f
 
+        # remove the feature if it improves or keeps score
         if feature_to_remove is not None:
             removed_features.append(feature_to_remove)
             current_features.remove(feature_to_remove)
+            base_score = best_score  # update the best score
+            print(f"\nRemoved feature {feature_to_remove}, new accuracy: {round(base_score * 100,2)}\n")
         else:
-            # if no feature is identified, break
-            print("No more features to remove, finishing the Backward Elimination")
+            print("\nNo more features to remove, finishing Backward Elimination\n")
             break
 
-
-
-    # after all, return the result of backward elimination
     return {
         "current_features": current_features,
         "best_score": best_score,
-        "removed_features": removed_features,
+        "removed_features": removed_features
     }
