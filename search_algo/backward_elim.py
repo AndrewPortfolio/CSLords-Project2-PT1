@@ -16,9 +16,19 @@ def backward_elim(num_features):
     # flag of improvement
     improved = True
 
-    # every iteration, see if we improved in performance
-    feature_to_remove = None
-    best_temp_score = best_score
+    while improved and len(current_features) > 1:
+        # every iteration, see if we improved in performance
+        feature_to_remove = None
+        best_temp_score = best_score
+
+        # try to remove each feature at once
+        for f in current_features:
+            # try removing feature f
+            # then, evaluate model
+            # place holder
+            pass
+
+        break
 
 
 
